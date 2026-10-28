@@ -1,0 +1,17 @@
+services:
+  # Static site: Render serves dist/ directly — free, no spin-down, no nginx.
+  - type: web
+    name: workflow-frontend
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      # SPA fallback — the app uses react-router BrowserRouter
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      # Baked into the bundle at build time; api.ts reads
+      # import.meta.env.VITE_API_BASE_URL (falls back to /api for local dev)
+      - key: VITE_API_BASE_URL
+        value: https://workflow-backend.onrender.com/api
