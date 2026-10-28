@@ -1,7 +1,7 @@
 services:
   # Static site: Render serves dist/ directly — free, no spin-down, no nginx.
   - type: web
-    name: workflow-frontend
+    name: ai-workflow-designer-ui
     runtime: static
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
@@ -14,4 +14,8 @@ services:
       # Baked into the bundle at build time; api.ts reads
       # import.meta.env.VITE_API_BASE_URL (falls back to /api for local dev)
       - key: VITE_API_BASE_URL
-        value: https://workflow-backend.onrender.com/api
+        value: https://ai-workflow-designer-agent.onrender.com/api
+
+      # Render subdomain for the frontend
+      - key: RENDER_EXTERNAL_URL
+        value: https://ai-workflow-designer-agent.onrender.co
