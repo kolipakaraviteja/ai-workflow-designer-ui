@@ -18,4 +18,4 @@ services:
 
       # Render subdomain for the frontend
       - key: RENDER_EXTERNAL_URL
-        value: https://ai-workflow-designer-agent.onrender.co
+        value: https://ai-workflow-designer-agent.onrender.com
