@@ -6,7 +6,7 @@ mermaid.initialize({
   startOnLoad: false,
   theme: 'neutral',
   flowchart: { curve: 'basis', useMaxWidth: true },
-  securityLevel: 'loose'
+  securityLevel: 'strict'
 });
 
 interface Props {

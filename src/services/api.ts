@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Workflow, WorkflowDefinition, AgentState, SimulationResult, AuthResponse, ConversationMessage, DocumentUploadResult, KnowledgeEntry } from '../types/workflow';
+import type { Workflow, WorkflowDefinition, AgentState, SimulationResult, AuthResponse, ConversationMessage, DocumentUploadResult, KnowledgeEntry, TokenUsageSummary, UsageSummary } from '../types/workflow';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
@@ -142,7 +142,7 @@ export interface AgentChatResponse {
   correlationId?: string;
   agentPath?: string;
   toolCallCount?: number;
-  tokenUsage?: { llmCalls: number; promptTokens: number; completionTokens: number; totalTokens: number };
+  tokenUsage?: TokenUsageSummary;
   error?: string;
 }
 
@@ -159,6 +159,18 @@ export const agentApi = {
       conversationId,
       agentType: 'ORCHESTRATOR'
     });
+    return response.data;
+  }
+};
+
+export const usageApi = {
+  async getMyUsage(): Promise<UsageSummary> {
+    const response = await api.get('/usage/me');
+    return response.data;
+  },
+
+  async getWorkflowUsage(workflowId: string): Promise<UsageSummary> {
+    const response = await api.get(`/usage/workflow/${workflowId}`);
     return response.data;
   }
 };

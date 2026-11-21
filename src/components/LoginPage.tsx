@@ -35,34 +35,47 @@ function LoginPage() {
 
   return (
     <div className="login-page">
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleSubmit} aria-busy={loading}>
+        <div className="login-brand-mark" aria-hidden="true">W</div>
         <h1>AI Workflow Designer</h1>
         <h2>{isRegister ? 'Create account' : 'Sign in'}</h2>
 
-        {error && <div className="login-error">{error}</div>}
+        {error && <div className="login-error" role="alert">{error}</div>}
 
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        {isRegister && (
+        <label className="auth-field">
+          <span>Username</span>
           <input
-            type="email"
-            placeholder="Email (optional)"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            autoComplete="username"
+            placeholder="Your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
           />
+        </label>
+        {isRegister && (
+          <label className="auth-field">
+            <span>Email <small>Optional</small></span>
+            <input
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
         )}
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <label className="auth-field">
+          <span>Password</span>
+          <input
+            type="password"
+            autoComplete={isRegister ? 'new-password' : 'current-password'}
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
 
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? 'Please wait...' : isRegister ? 'Register' : 'Sign in'}

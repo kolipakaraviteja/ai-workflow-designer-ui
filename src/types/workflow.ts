@@ -131,6 +131,17 @@ export interface ConversationMessage {
   createdAt: string;
 }
 
+export interface TokenUsageSummary {
+  llmCalls: number;
+  promptTokens: number;
+  completionTokens: number;
+  totalTokens: number;
+}
+
+export interface UsageSummary extends TokenUsageSummary {
+  byWorkflow: Record<string, TokenUsageSummary>;
+}
+
 export interface DocumentUploadResult {
   filename: string;
   purpose: string;
@@ -138,6 +149,8 @@ export interface DocumentUploadResult {
   chunkCount?: number;
   documentSourceId?: string;
   workflow?: WorkflowDefinition;
+  workflowId?: string;
+  tokenUsage?: TokenUsageSummary;
   message?: string;
 }
 
